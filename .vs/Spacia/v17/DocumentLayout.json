@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\loool\\OneDrive - King Suad University\\Desktop\\web gp\\Spacia\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{07F69BCF-76C4-4235-8DB3-D72F7728FF97}|Spacia\\Spacia.csproj|c:\\users\\loool\\onedrive - king suad university\\desktop\\web gp\\spacia\\spacia\\default.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
+      "RelativeMoniker": "D:0:0:{07F69BCF-76C4-4235-8DB3-D72F7728FF97}|Spacia\\Spacia.csproj|solutionrelative:spacia\\default.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Default.aspx",
+              "DocumentMoniker": "C:\\Users\\loool\\OneDrive - King Suad University\\Desktop\\web gp\\Spacia\\Spacia\\Default.aspx",
+              "RelativeDocumentMoniker": "Spacia\\Default.aspx",
+              "ToolTip": "C:\\Users\\loool\\OneDrive - King Suad University\\Desktop\\web gp\\Spacia\\Spacia\\Default.aspx",
+              "RelativeToolTip": "Spacia\\Default.aspx",
+              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
+              "WhenOpened": "2025-04-19T20:10:30.719Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

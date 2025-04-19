@@ -1,0 +1,125 @@
+<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.Mobile.master.cs" Inherits="Spacia.Site_Mobile" %>
+<%@ Register Src="~/ViewSwitcher.ascx" TagPrefix="friendlyUrls" TagName="ViewSwitcher" %>
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%: Page.Title %> - Spacia</title>
+    <asp:PlaceHolder runat="server">
+        <%: Scripts.Render("~/bundles/modernizr") %>
+    </asp:PlaceHolder>
+    <webopt:bundlereference runat="server" path="~/Content/css" />
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <style>
+        .qr-code {
+            max-width: 150px;
+            margin: 0 auto;
+        }
+        .qr-code img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+    </style>
+    <asp:ContentPlaceHolder runat="server" ID="HeadContent" />
+</head>
+<body>
+    <form id="form1" runat="server">
+        <asp:ScriptManager runat="server">
+            <Scripts>
+                <asp:ScriptReference Name="MsAjaxBundle" />
+                <asp:ScriptReference Name="jquery" />
+                <asp:ScriptReference Name="WebFormsBundle" />
+                <%--Site Scripts--%>
+            </Scripts>
+        </asp:ScriptManager>
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <div class="container">
+                <a class="navbar-brand" runat="server" href="~/">
+                    <img src="~/Assets/SPACIA.png" alt="Spacia Logo" runat="server" />
+                </a>
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse">
+                    <ul class="navbar-nav nav-center">
+                        <li class="nav-item"><a class="nav-link" runat="server" href="~/">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" runat="server" href="~/BookNow">Book Now</a></li>
+                        <li class="nav-item"><a class="nav-link" runat="server" href="~/Packages">Packages</a></li>
+                    </ul>
+                    <div class="ms-auto">
+                        <a href="~/SignIn" class="btn-login" runat="server">Sign In</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main>
+            <asp:ContentPlaceHolder runat="server" ID="FeaturedContent" />
+            <section class="content-wrapper main-content clear-fix">
+                <asp:ContentPlaceHolder runat="server" ID="MainContent" />
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <!-- Footer Links -->
+                <div class="row footer-links">
+                    <div class="col-6 col-md-3 mb-4">
+                        <h5>SPACIA</h5>
+                        <ul>
+                            <li><a href="~/About" runat="server">About</a></li>
+                            <li><a href="~/Pricing" runat="server">Pricing</a></li>
+                            <li><a href="~/Jobs" runat="server">Jobs</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-6 col-md-3 mb-4">
+                        <h5>Services</h5>
+                        <ul>
+                            <li><a href="~/Features" runat="server">Features</a></li>
+                            <li><a href="~/Privacy" runat="server">Privacy and Security</a></li>
+                            <li><a href="~/Marketplace" runat="server">Marketplace</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-6 col-md-3 mb-4">
+                        <h5>Help Center</h5>
+                        <ul>
+                            <li><a href="~/Community" runat="server">Community</a></li>
+                            <li><a href="~/Knowledge" runat="server">Knowledge Base</a></li>
+                            <li><a href="~/Support" runat="server">Support</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-6 col-md-3 mb-4">
+                        <h5>Connect With Us</h5>
+                        <div class="qr-code">
+                            <img src="~/Assets/qr-code.png" alt="Connect with Spacia" runat="server" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer Bottom -->
+                <div class="row footer-bottom">
+                    <div class="col-12 col-md-6 mb-3 mb-md-0">
+                        <p>&copy; <%: DateTime.Now.Year %> Spacia. All rights reserved.</p>
+                    </div>
+                    <div class="col-12 col-md-6 text-md-end">
+                        <a href="~/Terms" class="text-white me-3" runat="server">Terms of Service</a>
+                        <a href="~/Privacy" class="text-white" runat="server">Privacy Policy</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <friendlyUrls:ViewSwitcher runat="server" />
+    </form>
+    <asp:PlaceHolder runat="server">
+        <%: Scripts.Render("~/Scripts/bootstrap.js") %>
+    </asp:PlaceHolder>
+</body>
+</html>

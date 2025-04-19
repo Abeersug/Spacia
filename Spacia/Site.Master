@@ -1,0 +1,123 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="Spacia.SiteMaster" %>
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head runat="server">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%: Page.Title %> - Spacia</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="Scripts/carousel.js"></script>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link href="https://fonts.googleapis.com/css2?family=Adamina&display=swap" rel="stylesheet">
+</head>
+<body class="min-h-screen flex flex-col font-['Adamina']">
+    <form runat="server" class="flex-grow flex flex-col">
+        <asp:ScriptManager runat="server">
+            <Scripts>
+                <%--To learn more about bundling scripts in ScriptManager see https://go.microsoft.com/fwlink/?LinkID=301884 --%>
+                <%--Framework Scripts--%>
+                <asp:ScriptReference Name="MsAjaxBundle" />
+                <asp:ScriptReference Name="jquery" />
+                <asp:ScriptReference Name="WebForms.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebForms.js" />
+                <asp:ScriptReference Name="WebUIValidation.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebUIValidation.js" />
+                <asp:ScriptReference Name="MenuStandards.js" Assembly="System.Web" Path="~/Scripts/WebForms/MenuStandards.js" />
+                <asp:ScriptReference Name="GridView.js" Assembly="System.Web" Path="~/Scripts/WebForms/GridView.js" />
+                <asp:ScriptReference Name="DetailsView.js" Assembly="System.Web" Path="~/Scripts/WebForms/DetailsView.js" />
+                <asp:ScriptReference Name="TreeView.js" Assembly="System.Web" Path="~/Scripts/WebForms/TreeView.js" />
+                <asp:ScriptReference Name="WebParts.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebParts.js" />
+                <asp:ScriptReference Name="Focus.js" Assembly="System.Web" Path="~/Scripts/WebForms/Focus.js" />
+                <asp:ScriptReference Name="WebFormsBundle" />
+                <%--Site Scripts--%>
+            </Scripts>
+        </asp:ScriptManager>
+
+        <!-- Navigation -->
+        <nav class="bg-white shadow-lg">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between h-30">
+                    <div class="flex">
+                        <a class="flex-shrink-0 flex items-center" runat="server" href="~/">
+                            <img class="h-20 w-auto" src="~/Assets/SPACIA.png" alt="Spacia Logo" runat="server" />
+                        </a>
+                    </div>
+                    <div class="hidden sm:flex sm:items-center sm:justify-between flex-grow ml-10">
+                        <div class="flex justify-center flex-grow space-x-8">
+                            <a class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50" runat="server" href="~/">Home</a>
+                            <a class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50" runat="server" href="~/BookNow">Book Now</a>
+                            <a class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50" runat="server" href="~/Packages">Packages</a>
+                            <a class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50" runat="server" href="~/About">About Us</a>
+                        </div>
+                        <div>
+                            <a href="~/SignIn" class="inline-flex items-center px-10 py-2 border border-transparent text-sm font-medium rounded-full text-white bg-[#09384c] hover:bg-[#072a3a]" runat="server">Sign In</a>
+                        </div>
+                    </div>
+                    <div class="sm:hidden">
+                        <button type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500" aria-controls="mobile-menu" aria-expanded="false">
+                            <span class="sr-only">Open main menu</span>
+                            <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="flex-grow">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server">
+            </asp:ContentPlaceHolder>
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-gray-800 text-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                    <div>
+                        <h5 class="text-lg font-semibold mb-4">SPACIA</h5>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="hover:text-gray-300" runat="server">About</a></li>
+                            <li><a href="#" class="hover:text-gray-300" runat="server">Pricing</a></li>
+                            <li><a href="#" class="hover:text-gray-300" runat="server">Jobs</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h5 class="text-lg font-semibold mb-4">Services</h5>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="hover:text-gray-300" runat="server">Features</a></li>
+                            <li><a href="#" class="hover:text-gray-300" runat="server">Privacy and Security</a></li>
+                            <li><a href="#" class="hover:text-gray-300" runat="server">Marketplace</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h5 class="text-lg font-semibold mb-4">Help Center</h5>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="hover:text-gray-300" runat="server">Community</a></li>
+                            <li><a href="#" class="hover:text-gray-300" runat="server">Knowledge Base</a></li>
+                            <li><a href="#" class="hover:text-gray-300" runat="server">Support</a></li>
+                        </ul>
+                    </div>
+                    <div class="flex justify-center">
+                        <div class="qr-code bg-white p-4 rounded-lg">
+                            <img class="w-32 h-32" src="~/Assets/qrcode.png" alt="Connect with Spacia" runat="server" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border-t border-gray-700 mt-8 pt-8">
+                    <div class="flex flex-col md:flex-row justify-between items-center">
+                        <p class="text-sm">&copy; <%: DateTime.Now.Year %> Spacia. All rights reserved.</p>
+                        <div class="mt-4 md:mt-0 space-x-4">
+                            <a href="#" class="text-sm hover:text-gray-300" runat="server">Terms of Service</a>
+                            <a href="#" class="text-sm hover:text-gray-300" runat="server">Privacy Policy</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </form>
+</body>
+</html>
