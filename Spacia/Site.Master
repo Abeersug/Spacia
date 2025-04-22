@@ -1,4 +1,4 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="Spacia.SiteMaster" %>
+<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="Spacia.SiteMaster" %>
 
 <!DOCTYPE html>
 
@@ -10,8 +10,10 @@
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="Scripts/carousel.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <link href="https://fonts.googleapis.com/css2?family=Adamina&display=swap" rel="stylesheet">
+    <link href="Content/site-styles.css" rel="stylesheet" />
 </head>
 <body class="min-h-screen flex flex-col font-['Adamina']">
     <form runat="server" class="flex-grow flex flex-col">
@@ -20,7 +22,7 @@
                 <%--To learn more about bundling scripts in ScriptManager see https://go.microsoft.com/fwlink/?LinkID=301884 --%>
                 <%--Framework Scripts--%>
                 <asp:ScriptReference Name="MsAjaxBundle" />
-                <asp:ScriptReference Name="jquery" />
+                <asp:ScriptReference Path="~/Scripts/jquery-3.7.0.min.js" />
                 <asp:ScriptReference Name="WebForms.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebForms.js" />
                 <asp:ScriptReference Name="WebUIValidation.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebUIValidation.js" />
                 <asp:ScriptReference Name="MenuStandards.js" Assembly="System.Web" Path="~/Scripts/WebForms/MenuStandards.js" />
@@ -45,13 +47,23 @@
                     </div>
                     <div class="hidden sm:flex sm:items-center sm:justify-between flex-grow ml-10">
                         <div class="flex justify-center flex-grow space-x-8">
-                            <a class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50" runat="server" href="~/">Home</a>
-                            <a class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50" runat="server" href="~/BookNow">Book Now</a>
-                            <a class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50" runat="server" href="~/Packages">Packages</a>
-                            <a class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50" runat="server" href="~/About">About Us</a>
+                            <a class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50" runat="server" href="~/Default.aspx">Home</a>
+                            <a class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50" runat="server" href="~/BookNow.aspx">Book Now</a>
+                            <a class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50" runat="server" href="~/About.aspx">About Us</a>
                         </div>
                         <div>
-                            <a href="~/SignIn" class="inline-flex items-center px-10 py-2 border border-transparent text-sm font-medium rounded-full text-white bg-[#09384c] hover:bg-[#072a3a]" runat="server">Sign In</a>
+                            <asp:Panel ID="SignInButton" runat="server" Visible="<%# !IsUserLoggedIn %>">
+    &nbsp;<asp:Button ID="btnSignIn" runat="server" Text="Sign In" OnClick="SignIn_Click" CssClass="inline-flex items-center px-10 py-2 border border-transparent text-sm font-medium rounded-full text-white bg-[#09384c] hover:bg-[#072a3a]" />
+</asp:Panel>
+                            <asp:Panel ID="UserIcon" runat="server" Visible="<%# IsUserLoggedIn %>">
+
+
+                                <div class="flex items-center space-x-4">
+                                    <span class="text-sm text-gray-700">Welcome, <%: Session["UserName"] %></span>
+                                    <asp:Button ID="btnSignOut" runat="server" Text="Sign Out" OnClick="SignOut_Click" 
+                                        CssClass="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-[#09384c] hover:bg-[#072a3a]" />
+                                </div>
+                            </asp:Panel>
                         </div>
                     </div>
                     <div class="sm:hidden">

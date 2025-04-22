@@ -1,0 +1,133 @@
+/* Common form styles */
+.form-container {
+    max-width: 500px;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+.form-control {
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    padding: 8px 12px;
+    width: 80%;
+    display: block;
+    margin: 0 auto;
+}
+
+.validation-error {
+    color: #dc3545;
+    font-size: 12px;
+    margin-top: 4px;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.spacia-btn {
+    background-color: #09384c;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 16px;
+    width: 80%;
+    display: block;
+    margin: 0 auto;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.spacia-btn:hover {
+    background-color: #072a3a;
+}
+
+/* Page header styles */
+.page-header {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #09384c;
+}
+
+.page-header h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.page-header p {
+    color: #666;
+    font-size: 1.1rem;
+}
+
+/* Content container styles */
+.content-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Card styles */
+.card {
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Grid layout */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Text styles */
+.text-center {
+    text-align: center;
+}
+
+.text-primary {
+    color: #09384c;
+}
+
+/* Image styles */
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+/* Link styles */
+.link-primary {
+    color: #09384c;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.link-primary:hover {
+    color: #072a3a;
+    text-decoration: underline;
+}
+
+/* List styles */
+.list-unstyled {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Spacing utilities */
+.mt-4 { margin-top: 1rem; }
+.mb-4 { margin-bottom: 1rem; }
+.my-4 { margin-top: 1rem; margin-bottom: 1rem; }
+.p-4 { padding: 1rem; }

@@ -3,8 +3,32 @@
   "WorkspaceRootPath": "C:\\Users\\loool\\OneDrive - King Suad University\\Desktop\\web gp\\Spacia\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{07F69BCF-76C4-4235-8DB3-D72F7728FF97}|Spacia\\Spacia.csproj|c:\\users\\loool\\onedrive - king suad university\\desktop\\web gp\\spacia\\spacia\\default.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
+      "AbsoluteMoniker": "D:0:0:{07F69BCF-76C4-4235-8DB3-D72F7728FF97}|Spacia\\Spacia.csproj|C:\\Users\\loool\\OneDrive - King Suad University\\Desktop\\web gp\\Spacia\\spacia\\default.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
       "RelativeMoniker": "D:0:0:{07F69BCF-76C4-4235-8DB3-D72F7728FF97}|Spacia\\Spacia.csproj|solutionrelative:spacia\\default.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{07F69BCF-76C4-4235-8DB3-D72F7728FF97}|Spacia\\Spacia.csproj|c:\\users\\loool\\onedrive - king suad university\\desktop\\web gp\\spacia\\spacia\\signin.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
+      "RelativeMoniker": "D:0:0:{07F69BCF-76C4-4235-8DB3-D72F7728FF97}|Spacia\\Spacia.csproj|solutionrelative:spacia\\signin.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{07F69BCF-76C4-4235-8DB3-D72F7728FF97}|Spacia\\Spacia.csproj|C:\\Users\\loool\\OneDrive - King Suad University\\Desktop\\web gp\\Spacia\\spacia\\signin.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{07F69BCF-76C4-4235-8DB3-D72F7728FF97}|Spacia\\Spacia.csproj|solutionrelative:spacia\\signin.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{07F69BCF-76C4-4235-8DB3-D72F7728FF97}|Spacia\\Spacia.csproj|C:\\Users\\loool\\OneDrive - King Suad University\\Desktop\\web gp\\Spacia\\spacia\\register.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
+      "RelativeMoniker": "D:0:0:{07F69BCF-76C4-4235-8DB3-D72F7728FF97}|Spacia\\Spacia.csproj|solutionrelative:spacia\\register.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{07F69BCF-76C4-4235-8DB3-D72F7728FF97}|Spacia\\Spacia.csproj|C:\\Users\\loool\\OneDrive - King Suad University\\Desktop\\web gp\\Spacia\\spacia\\default.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{07F69BCF-76C4-4235-8DB3-D72F7728FF97}|Spacia\\Spacia.csproj|solutionrelative:spacia\\default.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{07F69BCF-76C4-4235-8DB3-D72F7728FF97}|Spacia\\Spacia.csproj|C:\\Users\\loool\\OneDrive - King Suad University\\Desktop\\web gp\\Spacia\\spacia\\site.master.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{07F69BCF-76C4-4235-8DB3-D72F7728FF97}|Spacia\\Spacia.csproj|solutionrelative:spacia\\site.master.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{07F69BCF-76C4-4235-8DB3-D72F7728FF97}|Spacia\\Spacia.csproj|C:\\Users\\loool\\OneDrive - King Suad University\\Desktop\\web gp\\Spacia\\spacia\\site.master||{B30AFBFF-D992-43B7-B62D-2642580A2883}",
+      "RelativeMoniker": "D:0:0:{07F69BCF-76C4-4235-8DB3-D72F7728FF97}|Spacia\\Spacia.csproj|solutionrelative:spacia\\site.master||{B30AFBFF-D992-43B7-B62D-2642580A2883}"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,8 +38,58 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 4,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "SignIn.aspx.cs",
+              "DocumentMoniker": "C:\\Users\\loool\\OneDrive - King Suad University\\Desktop\\web gp\\Spacia\\Spacia\\SignIn.aspx.cs",
+              "RelativeDocumentMoniker": "Spacia\\SignIn.aspx.cs",
+              "ToolTip": "C:\\Users\\loool\\OneDrive - King Suad University\\Desktop\\web gp\\Spacia\\Spacia\\SignIn.aspx.cs",
+              "RelativeToolTip": "Spacia\\SignIn.aspx.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAQwBEAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-22T10:18:19.708Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "SignIn.aspx",
+              "DocumentMoniker": "C:\\Users\\loool\\OneDrive - King Suad University\\Desktop\\web gp\\Spacia\\Spacia\\SignIn.aspx",
+              "RelativeDocumentMoniker": "Spacia\\SignIn.aspx",
+              "ToolTip": "C:\\Users\\loool\\OneDrive - King Suad University\\Desktop\\web gp\\Spacia\\Spacia\\SignIn.aspx",
+              "RelativeToolTip": "Spacia\\SignIn.aspx",
+              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
+              "WhenOpened": "2025-04-22T10:14:40.694Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Site.Master",
+              "DocumentMoniker": "C:\\Users\\loool\\OneDrive - King Suad University\\Desktop\\web gp\\Spacia\\Spacia\\Site.Master",
+              "RelativeDocumentMoniker": "Spacia\\Site.Master",
+              "ToolTip": "C:\\Users\\loool\\OneDrive - King Suad University\\Desktop\\web gp\\Spacia\\Spacia\\Site.Master",
+              "RelativeToolTip": "Spacia\\Site.Master",
+              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
+              "WhenOpened": "2025-04-22T10:10:23.951Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Site.Master.cs",
+              "DocumentMoniker": "C:\\Users\\loool\\OneDrive - King Suad University\\Desktop\\web gp\\Spacia\\Spacia\\Site.Master.cs",
+              "RelativeDocumentMoniker": "Spacia\\Site.Master.cs",
+              "ToolTip": "C:\\Users\\loool\\OneDrive - King Suad University\\Desktop\\web gp\\Spacia\\Spacia\\Site.Master.cs",
+              "RelativeToolTip": "Spacia\\Site.Master.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-22T10:08:57.815Z"
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
@@ -26,8 +100,32 @@
               "RelativeToolTip": "Spacia\\Default.aspx",
               "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
-              "WhenOpened": "2025-04-19T20:10:30.719Z",
+              "WhenOpened": "2025-04-21T10:11:03.867Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "register.aspx",
+              "DocumentMoniker": "C:\\Users\\loool\\OneDrive - King Suad University\\Desktop\\web gp\\Spacia\\Spacia\\register.aspx",
+              "RelativeDocumentMoniker": "Spacia\\register.aspx",
+              "ToolTip": "C:\\Users\\loool\\OneDrive - King Suad University\\Desktop\\web gp\\Spacia\\Spacia\\register.aspx",
+              "RelativeToolTip": "Spacia\\register.aspx",
+              "LogicalView": "7651a702-06e5-11d1-8ebd-00a0c90f26ea",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
+              "WhenOpened": "2025-04-22T10:39:49.772Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Default.aspx.cs",
+              "DocumentMoniker": "C:\\Users\\loool\\OneDrive - King Suad University\\Desktop\\web gp\\Spacia\\Spacia\\Default.aspx.cs",
+              "RelativeDocumentMoniker": "Spacia\\Default.aspx.cs",
+              "ToolTip": "C:\\Users\\loool\\OneDrive - King Suad University\\Desktop\\web gp\\Spacia\\Spacia\\Default.aspx.cs",
+              "RelativeToolTip": "Spacia\\Default.aspx.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-22T10:01:50.635Z"
             }
           ]
         }

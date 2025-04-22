@@ -10,6 +10,13 @@ namespace Spacia
     {
         public static void RegisterRoutes(RouteCollection routes)
         {
+            // Add a specific route for Register to point to Register.aspx
+            routes.MapPageRoute(
+                "RegisterRoute",
+                "Register",
+                "~/Register.aspx"
+            );
+            
             var settings = new FriendlyUrlSettings();
             settings.AutoRedirectMode = RedirectMode.Permanent;
             routes.EnableFriendlyUrls(settings);

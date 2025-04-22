@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System;
 using System.Web;
-using System.Web.Optimization;
-using System.Web.Routing;
-using System.Web.Security;
-using System.Web.SessionState;
+using System.Web.UI;
 
 namespace Spacia
 {
@@ -14,8 +9,19 @@ namespace Spacia
         void Application_Start(object sender, EventArgs e)
         {
             // Code that runs on application startup
-            RouteConfig.RegisterRoutes(RouteTable.Routes);
-            BundleConfig.RegisterBundles(BundleTable.Bundles);
+            
+            // Disable unobtrusive validation
+            ValidationSettings.UnobtrusiveValidationMode = UnobtrusiveValidationMode.None;
+            
+            // Register jQuery script mapping
+            ScriptManager.ScriptResourceMapping.AddDefinition("jquery", 
+                new ScriptResourceDefinition
+                {
+                    Path = "~/Scripts/jquery-3.7.0.min.js",
+                    DebugPath = "~/Scripts/jquery-3.7.0.js",
+                    CdnPath = "https://code.jquery.com/jquery-3.7.0.min.js",
+                    CdnDebugPath = "https://code.jquery.com/jquery-3.7.0.js"
+                });
         }
     }
 }
