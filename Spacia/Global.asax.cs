@@ -8,12 +8,12 @@ namespace Spacia
     {
         void Application_Start(object sender, EventArgs e)
         {
-            // Code that runs on application startup
+           
             
-            // Disable unobtrusive validation
+            
             ValidationSettings.UnobtrusiveValidationMode = UnobtrusiveValidationMode.None;
             
-            // Register jQuery script mapping
+            
             ScriptManager.ScriptResourceMapping.AddDefinition("jquery", 
                 new ScriptResourceDefinition
                 {

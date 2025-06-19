@@ -3,44 +3,40 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <div class="content-container">
         <div class="page-header">
-            <h2>About Spacia</h2>
-            <p>Your Premier Coworking Space Solution</p>
-        </div>
-
-        <div class="grid-container">
-            <div class="card">
-                <h3 class="text-primary mb-4">Our Mission</h3>
-                <p>At Spacia, we believe in creating inspiring workspaces that foster creativity, collaboration, and productivity. Our mission is to provide professionals with flexible, modern, and well-equipped spaces to help them achieve their goals.</p>
-            </div>
-
-            <div class="card">
-                <h3 class="text-primary mb-4">What We Offer</h3>
-                <ul class="list-unstyled">
-                    <li class="mb-4">✨ Modern workspaces with high-speed internet</li>
-                    <li class="mb-4">☕ Fully equipped kitchen and coffee bar</li>
-                    <li class="mb-4">🤝 Meeting rooms and event spaces</li>
-                    <li class="mb-4">🔒 24/7 secure access for members</li>
-                </ul>
-            </div>
-
-            <div class="card">
-                <h3 class="text-primary mb-4">Our Values</h3>
-                <p>We prioritize:</p>
-                <ul class="list-unstyled">
-                    <li class="mb-4">🌟 Excellence in service</li>
-                    <li class="mb-4">🤝 Community building</li>
-                    <li class="mb-4">💡 Innovation and creativity</li>
-                    <li class="mb-4">🌱 Sustainability</li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="card mt-4">
-            <h3 class="text-primary mb-4 text-center">Visit Us Today</h3>
-            <p class="text-center">Experience the perfect blend of comfort and productivity in our state-of-the-art facilities.</p>
-            <div class="text-center mt-4">
-                <asp:Button runat="server" Text="Book a Tour" CssClass="spacia-btn" OnClick="BookTour_Click" />
-            </div>
+            <h1 style="font-size: xx-large">About Spacia</h1>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+            <table align="center" style="width: 100%">
+                <tr>
+                    <td style="color: #3366CC">
+                        <h2>we gurantee your success</h2>
+                        <p>&nbsp;</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="height: 9px; color: #000000; font-size: large; background-color: #899493">We offer a premium workspace designed to meet the needs of students, individuals, and enterprises. Whether you’re a student looking for a quiet place to study, an individual seeking a productive work environment, or a business in need of flexible office solutions, our spaces provide high-speed internet, comfortable work areas, meeting rooms, and essential amenities. With tailored packages, we ensure a seamless experience that enhances productivity and collaboration.</td>
+                </tr>
+                <tr>
+                    <td>
+                        <br />
+                        <br />
+                        <asp:Image ID="Image1" runat="server" Height="329px" ImageUrl="~/Assets/photo_2025-04-23_14-14-36.jpg" style="text-align: right" Width="499px" />
+                        <br />
+                        <br />
+                        <br />
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: left">
+                        <h2>Our<span style="color: #3366CC"> Mission</span></h2>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: left; font-size: large; color: #000000">We strive to create a flexible and inspiring workspace that empowers students, individuals, and enterprises to achieve their goals. By providing high-quality facilities, seamless services, and a collaborative environment, we enable productivity, innovation, and growth for every member of our community.<br />
+                        <br />
+                    </td>
+                </tr>
+            </table>
         </div>
     </div>
 </asp:Content>

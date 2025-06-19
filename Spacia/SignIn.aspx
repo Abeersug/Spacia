@@ -30,7 +30,7 @@
             <asp:Label ID="Label1" runat="server" CssClass="validation-error" 
                 style="display: block; margin-top: 10px; text-align: center;" Visible="false"></asp:Label>
             <br />
-            <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl="~/register.aspx">Don&#39;t have an Account? Register Now</asp:HyperLink>
+<asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl="~/register.aspx" style="display:block; text-align:center;">Don't have an Account? Register Now</asp:HyperLink>
             <br />
         </div>
 

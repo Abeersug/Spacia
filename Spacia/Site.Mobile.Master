@@ -31,11 +31,11 @@
                 <asp:ScriptReference Name="MsAjaxBundle" />
                 <asp:ScriptReference Name="jquery" />
                 <asp:ScriptReference Name="WebFormsBundle" />
-                <%--Site Scripts--%>
+               
             </Scripts>
         </asp:ScriptManager>
 
-        <!-- Navigation -->
+       
         <nav class="navbar navbar-expand-lg navbar-light">
             <div class="container">
                 <a class="navbar-brand" runat="server" href="~/">
@@ -58,7 +58,7 @@
             </div>
         </nav>
 
-        <!-- Main Content -->
+       
         <main>
             <asp:ContentPlaceHolder runat="server" ID="FeaturedContent" />
             <section class="content-wrapper main-content clear-fix">
@@ -66,10 +66,10 @@
             </section>
         </main>
 
-        <!-- Footer -->
+      
         <footer class="footer">
             <div class="container">
-                <!-- Footer Links -->
+               
                 <div class="row footer-links">
                     <div class="col-6 col-md-3 mb-4">
                         <h5>SPACIA</h5>
@@ -103,7 +103,7 @@
                     </div>
                 </div>
 
-                <!-- Footer Bottom -->
+                
                 <div class="row footer-bottom">
                     <div class="col-12 col-md-6 mb-3 mb-md-0">
                         <p>&copy; <%: DateTime.Now.Year %> Spacia. All rights reserved.</p>

@@ -1,0 +1,399 @@
+<%@ Page Title="Manage Services" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" %>
+<%@ Import Namespace="System.Data.SqlClient" %>
+<%@ Import Namespace="System.Data" %>
+<%@ Import Namespace="System.Configuration" %>
+<%@ Import Namespace="System.Web" %>
+<%@ Import Namespace="System.IO" %>
+
+<script runat="server">
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        // Check if user is admin (you can implement proper authentication)
+        // For now, we'll allow access to everyone for testing
+        
+        if (!IsPostBack)
+        {
+            BindServicesGrid();
+        }
+    }
+    
+    private void BindServicesGrid()
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+        using (SqlConnection connection = new SqlConnection(connectionString))
+        {
+            string query = "SELECT ServiceID, ServiceName, Description, Duration, Price, ServicePhoto FROM Services";
+            SqlCommand command = new SqlCommand(query, connection);
+            SqlDataAdapter adapter = new SqlDataAdapter(command);
+            DataTable servicesTable = new DataTable();
+
+            try
+            {
+                connection.Open();
+                adapter.Fill(servicesTable);
+
+                ServicesGridView.DataSource = servicesTable;
+                ServicesGridView.DataBind();
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage.Text = "Error: " + ex.Message;
+                ErrorMessage.Visible = true;
+            }
+        }
+    }
+    
+    protected void ServicesGridView_RowEditing(object sender, GridViewEditEventArgs e)
+    {
+        ServicesGridView.EditIndex = e.NewEditIndex;
+        BindServicesGrid();
+    }
+    
+    protected void ServicesGridView_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+    {
+        ServicesGridView.EditIndex = -1;
+        BindServicesGrid();
+    }
+    
+    protected void ServicesGridView_RowUpdating(object sender, GridViewUpdateEventArgs e)
+    {
+        int serviceId = Convert.ToInt32(ServicesGridView.DataKeys[e.RowIndex].Value);
+        
+        TextBox txtServiceName = (TextBox)ServicesGridView.Rows[e.RowIndex].FindControl("txtServiceName");
+        TextBox txtDescription = (TextBox)ServicesGridView.Rows[e.RowIndex].FindControl("txtDescription");
+        TextBox txtDuration = (TextBox)ServicesGridView.Rows[e.RowIndex].FindControl("txtDuration");
+        TextBox txtPrice = (TextBox)ServicesGridView.Rows[e.RowIndex].FindControl("txtPrice");
+        
+        string serviceName = txtServiceName.Text;
+        string description = txtDescription.Text;
+        int duration = Convert.ToInt32(txtDuration.Text);
+        decimal price = Convert.ToDecimal(txtPrice.Text);
+        string servicePhoto = string.Empty;
+        
+        // Handle image upload for edit
+        FileUpload fileUploadEdit = (FileUpload)ServicesGridView.Rows[e.RowIndex].FindControl("fileUploadEdit");
+        if (fileUploadEdit.HasFile)
+        {
+            try
+            {
+                string fileName = Path.GetFileName(fileUploadEdit.FileName);
+                string fileExtension = Path.GetExtension(fileName).ToLower();
+                
+                // Check if file is an image
+                if (fileExtension == ".jpg" || fileExtension == ".jpeg" || fileExtension == ".png" || fileExtension == ".gif")
+                {
+                    // Generate unique filename
+                    string uniqueFileName = Guid.NewGuid().ToString() + fileExtension;
+                    string uploadPath = Server.MapPath("~/Assets/") + uniqueFileName;
+                    
+                    // Save the file
+                    fileUploadEdit.SaveAs(uploadPath);
+                    
+                    // Update the service photo path
+                    servicePhoto = "/Assets/" + uniqueFileName;
+                }
+                else
+                {
+                    ErrorMessage.Text = "Only image files (.jpg, .jpeg, .png, .gif) are allowed.";
+                    ErrorMessage.Visible = true;
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage.Text = "Error uploading file: " + ex.Message;
+                ErrorMessage.Visible = true;
+                return;
+            }
+        }
+        else
+        {
+            // If no new image is uploaded, keep the existing one
+            HiddenField hdnServicePhoto = (HiddenField)ServicesGridView.Rows[e.RowIndex].FindControl("hdnServicePhoto");
+            servicePhoto = hdnServicePhoto.Value;
+        }
+        
+        string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+        using (SqlConnection connection = new SqlConnection(connectionString))
+        {
+            string query = "UPDATE Services SET ServiceName = @ServiceName, Description = @Description, " +
+                           "Duration = @Duration, Price = @Price";
+                           
+            // Only update the photo if a new one was uploaded
+            if (!string.IsNullOrEmpty(servicePhoto))
+            {
+                query += ", ServicePhoto = @ServicePhoto";
+            }
+            
+            query += " WHERE ServiceID = @ServiceID";
+                           
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@ServiceName", serviceName);
+            command.Parameters.AddWithValue("@Description", description);
+            command.Parameters.AddWithValue("@Duration", duration);
+            command.Parameters.AddWithValue("@Price", price);
+            
+            if (!string.IsNullOrEmpty(servicePhoto))
+            {
+                command.Parameters.AddWithValue("@ServicePhoto", servicePhoto);
+            }
+            
+            command.Parameters.AddWithValue("@ServiceID", serviceId);
+            
+            try
+            {
+                connection.Open();
+                command.ExecuteNonQuery();
+                
+                SuccessMessage.Text = "Service updated successfully!";
+                SuccessMessage.Visible = true;
+                ErrorMessage.Visible = false;
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage.Text = "Error updating service: " + ex.Message;
+                ErrorMessage.Visible = true;
+                SuccessMessage.Visible = false;
+            }
+        }
+        
+        ServicesGridView.EditIndex = -1;
+        BindServicesGrid();
+    }
+    
+    protected void btnAddService_Click(object sender, EventArgs e)
+    {
+        string serviceName = txtNewServiceName.Text;
+        string description = txtNewDescription.Text;
+        int duration = Convert.ToInt32(txtNewDuration.Text);
+        decimal price = Convert.ToDecimal(txtNewPrice.Text);
+        string servicePhoto = string.Empty;
+        
+        // Handle image upload for new service
+        if (fileUploadNew.HasFile)
+        {
+            try
+            {
+                string fileName = Path.GetFileName(fileUploadNew.FileName);
+                string fileExtension = Path.GetExtension(fileName).ToLower();
+                
+                // Check if file is an image
+                if (fileExtension == ".jpg" || fileExtension == ".jpeg" || fileExtension == ".png" || fileExtension == ".gif")
+                {
+                    // Generate unique filename
+                    string uniqueFileName = Guid.NewGuid().ToString() + fileExtension;
+                    string uploadPath = Server.MapPath("~/Assets/") + uniqueFileName;
+                    
+                    // Save the file
+                    fileUploadNew.SaveAs(uploadPath);
+                    
+                    // Set the service photo path
+                    servicePhoto = "/Assets/" + uniqueFileName;
+                }
+                else
+                {
+                    ErrorMessage.Text = "Only image files (.jpg, .jpeg, .png, .gif) are allowed.";
+                    ErrorMessage.Visible = true;
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage.Text = "Error uploading file: " + ex.Message;
+                ErrorMessage.Visible = true;
+                return;
+            }
+        }
+        else
+        {
+            ErrorMessage.Text = "Please select an image for the service.";
+            ErrorMessage.Visible = true;
+            return;
+        }
+        
+        string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+        using (SqlConnection connection = new SqlConnection(connectionString))
+        {
+            string query = "INSERT INTO Services (ServiceName, Description, Duration, Price, ServicePhoto) " +
+                           "VALUES (@ServiceName, @Description, @Duration, @Price, @ServicePhoto)";
+                           
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@ServiceName", serviceName);
+            command.Parameters.AddWithValue("@Description", description);
+            command.Parameters.AddWithValue("@Duration", duration);
+            command.Parameters.AddWithValue("@Price", price);
+            command.Parameters.AddWithValue("@ServicePhoto", servicePhoto);
+            
+            try
+            {
+                connection.Open();
+                command.ExecuteNonQuery();
+                
+                // Clear form fields
+                txtNewServiceName.Text = string.Empty;
+                txtNewDescription.Text = string.Empty;
+                txtNewDuration.Text = string.Empty;
+                txtNewPrice.Text = string.Empty;
+                
+                SuccessMessage.Text = "New service added successfully!";
+                SuccessMessage.Visible = true;
+                ErrorMessage.Visible = false;
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage.Text = "Error adding service: " + ex.Message;
+                ErrorMessage.Visible = true;
+                SuccessMessage.Visible = false;
+            }
+        }
+        
+        BindServicesGrid();
+    }
+    
+    protected void ServicesGridView_RowDeleting(object sender, GridViewDeleteEventArgs e)
+    {
+        int serviceId = Convert.ToInt32(ServicesGridView.DataKeys[e.RowIndex].Value);
+        
+        string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+        using (SqlConnection connection = new SqlConnection(connectionString))
+        {
+            string query = "DELETE FROM Services WHERE ServiceID = @ServiceID";
+                           
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@ServiceID", serviceId);
+            
+            try
+            {
+                connection.Open();
+                command.ExecuteNonQuery();
+                
+                SuccessMessage.Text = "Service deleted successfully!";
+                SuccessMessage.Visible = true;
+                ErrorMessage.Visible = false;
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage.Text = "Error deleting service: " + ex.Message;
+                ErrorMessage.Visible = true;
+                SuccessMessage.Visible = false;
+            }
+        }
+        
+        BindServicesGrid();
+    }
+</script>
+
+<asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <h2 class="text-3xl font-bold mb-8 text-center text-gray-800">Manage Services</h2>
+        
+        <asp:Label ID="SuccessMessage" runat="server" CssClass="block w-full p-4 mb-4 bg-green-100 text-green-700 rounded-md" Visible="false"></asp:Label>
+        <asp:Label ID="ErrorMessage" runat="server" CssClass="block w-full p-4 mb-4 bg-red-100 text-red-700 rounded-md" Visible="false"></asp:Label>
+        
+        <!-- Services Grid -->
+        <div class="bg-white shadow-md rounded-lg overflow-hidden mb-8">
+            <asp:GridView ID="ServicesGridView" runat="server" AutoGenerateColumns="False" 
+                DataKeyNames="ServiceID" OnRowEditing="ServicesGridView_RowEditing" 
+                OnRowCancelingEdit="ServicesGridView_RowCancelingEdit" OnRowUpdating="ServicesGridView_RowUpdating"
+                OnRowDeleting="ServicesGridView_RowDeleting"
+                CssClass="min-w-full divide-y divide-gray-200" GridLines="None">
+                <HeaderStyle CssClass="bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider py-3 px-4" />
+                <RowStyle CssClass="bg-white border-b border-gray-200" />
+                <AlternatingRowStyle CssClass="bg-gray-50 border-b border-gray-200" />
+                <Columns>
+                    <asp:BoundField DataField="ServiceID" HeaderText="ID" ReadOnly="True" ItemStyle-CssClass="py-3 px-4" HeaderStyle-CssClass="py-3 px-4" />
+                    <asp:TemplateField HeaderText="Service Name" ItemStyle-CssClass="py-3 px-4" HeaderStyle-CssClass="py-3 px-4">
+                        <ItemTemplate>
+                            <%# Eval("ServiceName") %>
+                        </ItemTemplate>
+                        <EditItemTemplate>
+                            <asp:TextBox ID="txtServiceName" runat="server" Text='<%# Bind("ServiceName") %>' CssClass="w-full p-2 border border-gray-300 rounded-md"></asp:TextBox>
+                        </EditItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Description" ItemStyle-CssClass="py-3 px-4" HeaderStyle-CssClass="py-3 px-4">
+                        <ItemTemplate>
+                            <%# Eval("Description") %>
+                        </ItemTemplate>
+                        <EditItemTemplate>
+                            <asp:TextBox ID="txtDescription" runat="server" Text='<%# Bind("Description") %>' TextMode="MultiLine" Rows="3" CssClass="w-full p-2 border border-gray-300 rounded-md"></asp:TextBox>
+                        </EditItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Duration (min)" ItemStyle-CssClass="py-3 px-4" HeaderStyle-CssClass="py-3 px-4">
+                        <ItemTemplate>
+                            <%# Eval("Duration") %>
+                        </ItemTemplate>
+                        <EditItemTemplate>
+                            <asp:TextBox ID="txtDuration" runat="server" Text='<%# Bind("Duration") %>' CssClass="w-full p-2 border border-gray-300 rounded-md"></asp:TextBox>
+                        </EditItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Price ($)" ItemStyle-CssClass="py-3 px-4" HeaderStyle-CssClass="py-3 px-4">
+                        <ItemTemplate>
+                            <%# Eval("Price", "{0:F2}") %>
+                        </ItemTemplate>
+                        <EditItemTemplate>
+                            <asp:TextBox ID="txtPrice" runat="server" Text='<%# Bind("Price") %>' CssClass="w-full p-2 border border-gray-300 rounded-md"></asp:TextBox>
+                        </EditItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Image" ItemStyle-CssClass="py-3 px-4" HeaderStyle-CssClass="py-3 px-4">
+                        <ItemTemplate>
+                            <img src='<%# Eval("ServicePhoto") %>' alt='<%# Eval("ServiceName") %>' class="w-20 h-20 object-cover rounded-md" onerror="this.src='/Assets/SPACIA.png';" />
+                        </ItemTemplate>
+                        <EditItemTemplate>
+                            <div class="mb-2">
+                                <img src='<%# Eval("ServicePhoto") %>' alt='<%# Eval("ServiceName") %>' class="w-20 h-20 object-cover rounded-md mb-2" onerror="this.src='/Assets/SPACIA.png';" />
+                                <asp:HiddenField ID="hdnServicePhoto" runat="server" Value='<%# Eval("ServicePhoto") %>' />
+                            </div>
+                            <asp:FileUpload ID="fileUploadEdit" runat="server" CssClass="w-full p-2 border border-gray-300 rounded-md" />
+                            <small class="text-gray-500">Leave empty to keep current image</small>
+                        </EditItemTemplate>
+                    </asp:TemplateField>
+                    <asp:CommandField ShowEditButton="True" ShowDeleteButton="True" 
+                        ButtonType="Button" 
+                        EditText="<span class='px-3 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600'>Edit</span>" 
+                        UpdateText="<span class='px-3 py-1 bg-green-500 text-white rounded-md hover:bg-green-600'>Update</span>" 
+                        CancelText="<span class='px-3 py-1 bg-gray-500 text-white rounded-md hover:bg-gray-600'>Cancel</span>"
+                        DeleteText="<span class='px-3 py-1 bg-red-500 text-white rounded-md hover:bg-red-600'>Delete</span>"
+                        ItemStyle-CssClass="py-3 px-4" HeaderStyle-CssClass="py-3 px-4" />
+                </Columns>
+            </asp:GridView>
+        </div>
+        
+        <!-- Add New Service Form -->
+        <div class="bg-white shadow-md rounded-lg overflow-hidden p-6">
+            <h3 class="text-xl font-bold mb-4 text-gray-800">Add New Service</h3>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Service Name</label>
+                    <asp:TextBox ID="txtNewServiceName" runat="server" CssClass="w-full p-2 border border-gray-300 rounded-md" required="required"></asp:TextBox>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Duration (minutes)</label>
+                    <asp:TextBox ID="txtNewDuration" runat="server" TextMode="Number" CssClass="w-full p-2 border border-gray-300 rounded-md" required="required"></asp:TextBox>
+                </div>
+            </div>
+            
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                <asp:TextBox ID="txtNewDescription" runat="server" TextMode="MultiLine" Rows="3" CssClass="w-full p-2 border border-gray-300 rounded-md" required="required"></asp:TextBox>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Price ($)</label>
+                    <asp:TextBox ID="txtNewPrice" runat="server" TextMode="Number" step="0.01" CssClass="w-full p-2 border border-gray-300 rounded-md" required="required"></asp:TextBox>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Service Image</label>
+                    <asp:FileUpload ID="fileUploadNew" runat="server" CssClass="w-full p-2 border border-gray-300 rounded-md" required="required" />
+                    <small class="text-gray-500">Upload an image for the service (JPG, PNG, GIF)</small>
+                </div>
+            </div>
+            
+            <div class="mt-4">
+                <asp:Button ID="btnAddService" runat="server" Text="Add Service" OnClick="btnAddService_Click" 
+                    CssClass="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-[#09384c] hover:bg-[#072a3a]" />
+            </div>
+        </div>
+    </div>
+</asp:Content>

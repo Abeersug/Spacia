@@ -7,8 +7,11 @@ using System.Web.UI.WebControls;
 
 namespace Spacia
 {
-    public partial class Packages : Page
-    {
+	public partial class UserDashboard : System.Web.UI.Page
+	{
+		protected void Page_Load(object sender, EventArgs e)
+		{
 
-    }
+		}
+	}
 }

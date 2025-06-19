@@ -1,26 +1,29 @@
-<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="Spacia.SiteMaster" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="Spacia.SiteMaster" %>
 
 <!DOCTYPE html>
 
 <html lang="en">
 <head runat="server">
+    
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%: Page.Title %> - Spacia</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="Scripts/carousel.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
-    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <link href="https://fonts.googleapis.com/css2?family=Adamina&display=swap" rel="stylesheet">
     <link href="Content/site-styles.css" rel="stylesheet" />
+   
+   
+   
 </head>
+
 <body class="min-h-screen flex flex-col font-['Adamina']">
     <form runat="server" class="flex-grow flex flex-col">
         <asp:ScriptManager runat="server">
             <Scripts>
-                <%--To learn more about bundling scripts in ScriptManager see https://go.microsoft.com/fwlink/?LinkID=301884 --%>
-                <%--Framework Scripts--%>
+                
                 <asp:ScriptReference Name="MsAjaxBundle" />
                 <asp:ScriptReference Path="~/Scripts/jquery-3.7.0.min.js" />
                 <asp:ScriptReference Name="WebForms.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebForms.js" />
@@ -32,11 +35,9 @@
                 <asp:ScriptReference Name="WebParts.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebParts.js" />
                 <asp:ScriptReference Name="Focus.js" Assembly="System.Web" Path="~/Scripts/WebForms/Focus.js" />
                 <asp:ScriptReference Name="WebFormsBundle" />
-                <%--Site Scripts--%>
+               
             </Scripts>
         </asp:ScriptManager>
-
-        <!-- Navigation -->
         <nav class="bg-white shadow-lg">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between h-30">
@@ -48,22 +49,34 @@
                     <div class="hidden sm:flex sm:items-center sm:justify-between flex-grow ml-10">
                         <div class="flex justify-center flex-grow space-x-8">
                             <a class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50" runat="server" href="~/Default.aspx">Home</a>
-                            <a class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50" runat="server" href="~/BookNow.aspx">Book Now</a>
+                            <a class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50" runat="server" href="~/userServices.aspx">Services</a>
                             <a class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50" runat="server" href="~/About.aspx">About Us</a>
                         </div>
                         <div>
-                            <asp:Panel ID="SignInButton" runat="server" Visible="<%# !IsUserLoggedIn %>">
-    &nbsp;<asp:Button ID="btnSignIn" runat="server" Text="Sign In" OnClick="SignIn_Click" CssClass="inline-flex items-center px-10 py-2 border border-transparent text-sm font-medium rounded-full text-white bg-[#09384c] hover:bg-[#072a3a]" />
-</asp:Panel>
-                            <asp:Panel ID="UserIcon" runat="server" Visible="<%# IsUserLoggedIn %>">
-
-
-                                <div class="flex items-center space-x-4">
-                                    <span class="text-sm text-gray-700">Welcome, <%: Session["UserName"] %></span>
-                                    <asp:Button ID="btnSignOut" runat="server" Text="Sign Out" OnClick="SignOut_Click" 
-                                        CssClass="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-[#09384c] hover:bg-[#072a3a]" />
-                                </div>
+                            <asp:Panel ID="SignInButton" runat="server" Visible='<%# !IsUserLoggedIn %>'>
+                                <asp:Button ID="btnSignIn" runat="server" Text="Sign In" OnClick="SignIn_Click" 
+                                    CssClass="inline-flex items-center px-10 py-2 border border-transparent text-sm font-medium rounded-full text-white bg-[#09384c] hover:bg-[#072a3a]" />
                             </asp:Panel>
+                            <asp:Panel ID="UserIcon" runat="server" Visible='<%# IsUserLoggedIn %>'>
+    <div class="flex items-center space-x-4">
+        
+        <asp:LinkButton ID="lnkUserProfile" runat="server" OnClick="UserProfile_Click" CssClass="flex items-center space-x-2">
+            <div class="w-8 h-8 rounded-full bg-[#09384c] flex items-center justify-center text-white font-semibold">
+                <%: Session["UserInitials"] %>
+            </div>
+            <span class="text-sm text-gray-700"><%: Session["UserName"] %></span>
+        </asp:LinkButton>
+
+       
+        <asp:DropDownList ID="ddlUserMenu" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlUserMenu_SelectedIndexChanged"
+            CssClass="border border-gray-300 rounded-md px-2 py-1 text-sm ml-4">
+            <asp:ListItem Text="Account Options" Value="" />
+            <asp:ListItem Text="Dashboard" Value="Dashboard" />
+            <asp:ListItem Text="Logout" Value="Logout" />
+        </asp:DropDownList>
+    </div>
+</asp:Panel>
+
                         </div>
                     </div>
                     <div class="sm:hidden">
@@ -78,13 +91,10 @@
             </div>
         </nav>
 
-        <!-- Main Content -->
         <main class="flex-grow">
             <asp:ContentPlaceHolder ID="MainContent" runat="server">
             </asp:ContentPlaceHolder>
         </main>
-
-        <!-- Footer -->
         <footer class="bg-gray-800 text-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-8">

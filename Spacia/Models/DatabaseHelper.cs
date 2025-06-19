@@ -72,22 +72,105 @@ namespace Spacia.Models
                 using (SqlCommand cmd = new SqlCommand("SELECT * FROM Users WHERE Email = @Email", conn))
                 {
                     cmd.Parameters.AddWithValue("@Email", email);
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    try
                     {
-                        if (reader.Read())
+                        using (SqlDataReader reader = cmd.ExecuteReader())
                         {
-                            return new User
+                            if (reader.Read())
                             {
-                                UserId = reader.GetInt32(reader.GetOrdinal("UserId")),
-                                Email = reader.GetString(reader.GetOrdinal("Email")),
-                                Password = reader.GetString(reader.GetOrdinal("Password")),
-                                FirstName = reader.GetString(reader.GetOrdinal("FirstName")),
-                                LastName = reader.GetString(reader.GetOrdinal("LastName")),
-                                CreatedAt = reader.GetDateTime(reader.GetOrdinal("CreatedAt")),
-                                LastLoginAt = reader.IsDBNull(reader.GetOrdinal("LastLoginAt")) ? null : (DateTime?)reader.GetDateTime(reader.GetOrdinal("LastLoginAt"))
-                            };
+                                User user = new User();
+                                
+                                // Get required fields
+                                user.UserId = reader.GetInt32(reader.GetOrdinal("UserId"));
+                                user.Email = reader.GetString(reader.GetOrdinal("Email"));
+                                user.Password = reader.GetString(reader.GetOrdinal("Password"));
+                                
+                                // Get fields that may be null with safer handling
+                                user.FirstName = !reader.IsDBNull(reader.GetOrdinal("FirstName")) 
+                                    ? reader.GetString(reader.GetOrdinal("FirstName")) 
+                                    : string.Empty;
+                                
+                                // Special handling for LastName which might be null
+                                int lastNameOrdinal = -1;
+                                try {
+                                    lastNameOrdinal = reader.GetOrdinal("LastName");
+                                    user.LastName = !reader.IsDBNull(lastNameOrdinal) 
+                                        ? reader.GetString(lastNameOrdinal) 
+                                        : string.Empty;
+                                }
+                                catch (IndexOutOfRangeException) {
+                                    // LastName column doesn't exist in this table
+                                    user.LastName = string.Empty;
+                                    System.Diagnostics.Debug.WriteLine("LastName column not found in Users table");
+                                }
+                                
+                                // Get phone number if it exists
+                                int phoneOrdinal = -1;
+                                try {
+                                    phoneOrdinal = reader.GetOrdinal("PhoneNumber");
+                                    user.PhoneNumber = !reader.IsDBNull(phoneOrdinal) 
+                                        ? reader.GetString(phoneOrdinal) 
+                                        : string.Empty;
+                                }
+                                catch (IndexOutOfRangeException) {
+                                    // Try legacy "Phone" column name
+                                    try {
+                                        phoneOrdinal = reader.GetOrdinal("Phone");
+                                        user.PhoneNumber = !reader.IsDBNull(phoneOrdinal) 
+                                            ? reader.GetString(phoneOrdinal) 
+                                            : string.Empty;
+                                    }
+                                    catch (IndexOutOfRangeException) {
+                                        user.PhoneNumber = string.Empty;
+                                        System.Diagnostics.Debug.WriteLine("Neither PhoneNumber nor Phone column found in Users table");
+                                    }
+                                }
+                                
+                                // Get Role
+                                try {
+                                    int roleOrdinal = reader.GetOrdinal("Role");
+                                    user.Role = !reader.IsDBNull(roleOrdinal) 
+                                        ? reader.GetString(roleOrdinal) 
+                                        : "user";
+                                }
+                                catch (IndexOutOfRangeException) {
+                                    user.Role = "user";
+                                    System.Diagnostics.Debug.WriteLine("Role column not found in Users table");
+                                }
+                                
+                                // Dates
+                                try {
+                                    int createdAtOrdinal = reader.GetOrdinal("CreatedAt");
+                                    user.CreatedAt = !reader.IsDBNull(createdAtOrdinal) 
+                                        ? reader.GetDateTime(createdAtOrdinal) 
+                                        : DateTime.Now;
+                                }
+                                catch (IndexOutOfRangeException) {
+                                    user.CreatedAt = DateTime.Now;
+                                    System.Diagnostics.Debug.WriteLine("CreatedAt column not found in Users table");
+                                }
+                                
+                                try {
+                                    int lastLoginOrdinal = reader.GetOrdinal("LastLoginAt");
+                                    user.LastLoginAt = !reader.IsDBNull(lastLoginOrdinal) 
+                                        ? (DateTime?)reader.GetDateTime(lastLoginOrdinal) 
+                                        : null;
+                                }
+                                catch (IndexOutOfRangeException) {
+                                    user.LastLoginAt = null;
+                                    System.Diagnostics.Debug.WriteLine("LastLoginAt column not found in Users table");
+                                }
+                                
+                                System.Diagnostics.Debug.WriteLine($"User found: {user.Email}, UserId: {user.UserId}");
+                                return user;
+                            }
+                            return null;
                         }
-                        return null;
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"Error in GetUserByEmail: {ex.Message}");
+                        throw;
                     }
                 }
             }
@@ -154,6 +237,133 @@ namespace Spacia.Models
                             return true;
                         }
                         return false;
+                    }
+                }
+            }
+        }
+
+        public static void UpdateUserLastLogin(int userId)
+        {
+            using (SqlConnection conn = new SqlConnection(ConnectionString))
+            {
+                conn.Open();
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    cmd.Connection = conn;
+                    cmd.CommandText = "UPDATE Users SET LastLoginAt = GETDATE() WHERE UserId = @UserId";
+                    cmd.Parameters.AddWithValue("@UserId", userId);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public static User GetUserById(int userId)
+        {
+            using (SqlConnection conn = new SqlConnection(ConnectionString))
+            {
+                conn.Open();
+                using (SqlCommand cmd = new SqlCommand("SELECT * FROM Users WHERE UserId = @UserId", conn))
+                {
+                    cmd.Parameters.AddWithValue("@UserId", userId);
+                    try
+                    {
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                User user = new User();
+                                
+                                // Get required fields
+                                user.UserId = reader.GetInt32(reader.GetOrdinal("UserId"));
+                                user.Email = reader.GetString(reader.GetOrdinal("Email"));
+                                user.Password = reader.GetString(reader.GetOrdinal("Password"));
+                                
+                                // Get fields that may be null with safer handling
+                                user.FirstName = !reader.IsDBNull(reader.GetOrdinal("FirstName")) 
+                                    ? reader.GetString(reader.GetOrdinal("FirstName")) 
+                                    : string.Empty;
+                                
+                                // Special handling for LastName which might be null
+                                int lastNameOrdinal = -1;
+                                try {
+                                    lastNameOrdinal = reader.GetOrdinal("LastName");
+                                    user.LastName = !reader.IsDBNull(lastNameOrdinal) 
+                                        ? reader.GetString(lastNameOrdinal) 
+                                        : string.Empty;
+                                }
+                                catch (IndexOutOfRangeException) {
+                                    // LastName column doesn't exist in this table
+                                    user.LastName = string.Empty;
+                                    System.Diagnostics.Debug.WriteLine("LastName column not found in Users table");
+                                }
+                                
+                                // Get phone number if it exists
+                                int phoneOrdinal = -1;
+                                try {
+                                    phoneOrdinal = reader.GetOrdinal("PhoneNumber");
+                                    user.PhoneNumber = !reader.IsDBNull(phoneOrdinal) 
+                                        ? reader.GetString(phoneOrdinal) 
+                                        : string.Empty;
+                                }
+                                catch (IndexOutOfRangeException) {
+                                    // Try legacy "Phone" column name
+                                    try {
+                                        phoneOrdinal = reader.GetOrdinal("Phone");
+                                        user.PhoneNumber = !reader.IsDBNull(phoneOrdinal) 
+                                            ? reader.GetString(phoneOrdinal) 
+                                            : string.Empty;
+                                    }
+                                    catch (IndexOutOfRangeException) {
+                                        user.PhoneNumber = string.Empty;
+                                        System.Diagnostics.Debug.WriteLine("Neither PhoneNumber nor Phone column found in Users table");
+                                    }
+                                }
+                                
+                                // Get Role
+                                try {
+                                    int roleOrdinal = reader.GetOrdinal("Role");
+                                    user.Role = !reader.IsDBNull(roleOrdinal) 
+                                        ? reader.GetString(roleOrdinal) 
+                                        : "user";
+                                }
+                                catch (IndexOutOfRangeException) {
+                                    user.Role = "user";
+                                    System.Diagnostics.Debug.WriteLine("Role column not found in Users table");
+                                }
+                                
+                                // Dates
+                                try {
+                                    int createdAtOrdinal = reader.GetOrdinal("CreatedAt");
+                                    user.CreatedAt = !reader.IsDBNull(createdAtOrdinal) 
+                                        ? reader.GetDateTime(createdAtOrdinal) 
+                                        : DateTime.Now;
+                                }
+                                catch (IndexOutOfRangeException) {
+                                    user.CreatedAt = DateTime.Now;
+                                    System.Diagnostics.Debug.WriteLine("CreatedAt column not found in Users table");
+                                }
+                                
+                                try {
+                                    int lastLoginOrdinal = reader.GetOrdinal("LastLoginAt");
+                                    user.LastLoginAt = !reader.IsDBNull(lastLoginOrdinal) 
+                                        ? (DateTime?)reader.GetDateTime(lastLoginOrdinal) 
+                                        : null;
+                                }
+                                catch (IndexOutOfRangeException) {
+                                    user.LastLoginAt = null;
+                                    System.Diagnostics.Debug.WriteLine("LastLoginAt column not found in Users table");
+                                }
+                                
+                                System.Diagnostics.Debug.WriteLine($"User found by ID: {userId}, Email: {user.Email}");
+                                return user;
+                            }
+                            return null;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"Error in GetUserById: {ex.Message}");
+                        throw;
                     }
                 }
             }

@@ -1,50 +1,60 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="register.aspx.cs" Inherits="Spacia.register" %>
+<%@ Page Title="Register" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="register.aspx.cs" Inherits="Spacia.register" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <p>
-        HELLO!</p>
-    <p>
-        &nbsp;</p>
-    <p>
-        <asp:TextBox ID="TextBox1" runat="server" placeholder="Name" Height="31px" Width="300px" style ="border-redius: 20px; padding: 5px;" BorderColor="Silver" BorderWidth="2px"></asp:TextBox>
-    </p>
-    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="TextBox1" ErrorMessage="Name is required" ForeColor="#FF3300" style="font-size: xx-small"></asp:RequiredFieldValidator>
-    <br />
-    <p>
-        <asp:TextBox ID="TextBox2" runat="server" placeholder="Email" Height="31px" Width="300px" style ="border-redius: 20px; padding: 5px;" BorderColor="Silver" BorderWidth="2px" OnTextChanged="TextBox2_TextChanged1" TextMode="Email"></asp:TextBox>
-    </p>
-    <p>
-        <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="TextBox2" Display="Dynamic" ErrorMessage="Email is required" ForeColor="#FF3300" style="font-size: xx-small"></asp:RequiredFieldValidator>
-        <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ControlToValidate="TextBox2" Display="Dynamic" ErrorMessage="Invalid email format" ForeColor="#FF3300" style="font-size: xx-small" ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*"></asp:RegularExpressionValidator>
-    </p>
-    <p>
-        &nbsp;</p>
-    <p>
-        <asp:TextBox ID="TextBox3" runat="server" placeholder="Password" Height="31px" Width="300px" style ="border-redius: 20px; padding: 5px;" BorderColor="Silver" BorderWidth="2px" TextMode="Password"></asp:TextBox>
-    </p>
-    <p>
-        <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ControlToValidate="TextBox3" Display="Dynamic" ErrorMessage="Password is required" ForeColor="#FF3300" style="font-size: xx-small"></asp:RequiredFieldValidator>
-    </p>
-    <p>
-        &nbsp;</p>
-    <p>
-        <asp:TextBox ID="TextBox4" runat="server" placeholder="Confirm Password" Height="31px" Width="300px" style ="border-redius: 20px; padding: 5px;" BorderColor="Silver" BorderWidth="2px" TextMode="Password"></asp:TextBox>
-    </p>
-    <p>
-        <asp:CompareValidator ID="CompareValidator1" runat="server" ControlToCompare="TextBox3" ControlToValidate="TextBox4" Display="Dynamic" ErrorMessage="Password not matched" ForeColor="#FF3300" style="font-size: xx-small"></asp:CompareValidator>
-    </p>
-    <p>
-        &nbsp;</p>
-    <p>
-        <asp:TextBox ID="TextBox5" runat="server" placeholder="Phone" Height="31px" Width="300px" style ="border-redius: 20px; padding: 5px;" BorderColor="Silver" BorderWidth="2px" TextMode="Phone"></asp:TextBox>
-        <asp:SqlDataSource ID="SqlDataSource1" runat="server"></asp:SqlDataSource>
-    </p>
-    <p>
-        <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ControlToValidate="TextBox5" Display="Dynamic" ErrorMessage="Phone is required" ForeColor="#FF3300" style="font-size: xx-small"></asp:RequiredFieldValidator>
-    </p>
-    <p>
-        <asp:Button ID="Button1" runat="server" Height="53px" OnClick="Button1_Click" style="color: #FFFFFF; background-color: #1F4555" Text="Sign Up" Width="139px" />
-    </p>
-    <p>
-        <asp:Label ID="Label1" runat="server"></asp:Label>
-    </p>
+    <div class="form-container">
+        <div class="page-header">
+            <h2>Create your account</h2>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 15px;">
+            <label for="TextBox1">Name:</label>
+            <asp:TextBox ID="TextBox1" runat="server" CssClass="form-control" placeholder="Name"></asp:TextBox>
+            <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="TextBox1" 
+                ErrorMessage="Name is required" CssClass="validation-error" Display="Dynamic"></asp:RequiredFieldValidator>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 15px;">
+            <label for="TextBox2">Email:</label>
+            <asp:TextBox ID="TextBox2" runat="server" CssClass="form-control" placeholder="Email" TextMode="Email" OnTextChanged="TextBox2_TextChanged1"></asp:TextBox>
+            <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="TextBox2" 
+                ErrorMessage="Email is required" CssClass="validation-error" Display="Dynamic"></asp:RequiredFieldValidator>
+            <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ControlToValidate="TextBox2" 
+                ErrorMessage="Invalid email format" ValidationExpression="\w+([-+.']\w+)*@\w+([-.']\w+)*\.\w+([-.']\w+)*" 
+                CssClass="validation-error" Display="Dynamic"></asp:RegularExpressionValidator>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 15px;">
+            <label for="TextBox3">Password:</label>
+            <asp:TextBox ID="TextBox3" runat="server" TextMode="Password" CssClass="form-control" 
+                placeholder="Password"></asp:TextBox>
+            <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ControlToValidate="TextBox3" 
+                ErrorMessage="Password is required" CssClass="validation-error" Display="Dynamic"></asp:RequiredFieldValidator>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 15px;">
+            <label for="TextBox4">Confirm Password:</label>
+            <asp:TextBox ID="TextBox4" runat="server" TextMode="Password" CssClass="form-control" 
+                placeholder="Confirm Password"></asp:TextBox>
+            <asp:CompareValidator ID="CompareValidator1" runat="server" ControlToCompare="TextBox3" ControlToValidate="TextBox4" 
+                ErrorMessage="Password not matched" CssClass="validation-error" Display="Dynamic"></asp:CompareValidator>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 15px;">
+            <label for="TextBox5">Phone:</label>
+            <asp:TextBox ID="TextBox5" runat="server" CssClass="form-control" placeholder="Phone" TextMode="Phone"></asp:TextBox>
+            <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ControlToValidate="TextBox5" 
+                ErrorMessage="Phone is required" CssClass="validation-error" Display="Dynamic"></asp:RequiredFieldValidator>
+            <asp:SqlDataSource ID="SqlDataSource1" runat="server"></asp:SqlDataSource>
+        </div>
+
+        <div class="form-group">
+            <asp:Button ID="Button1" runat="server" Text="Sign Up" OnClick="Button1_Click" 
+                CssClass="spacia-btn" />
+            <asp:Label ID="Label1" runat="server" CssClass="validation-error" 
+                style="display: block; margin-top: 10px; text-align: center;" Visible="false"></asp:Label>
+            <br />
+            <div style="text-align: center;">
+                <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl="~/SignIn.aspx">Already have an Account? Sign In</asp:HyperLink>
+            </div>
+        </div>
+    </div>
 </asp:Content>
